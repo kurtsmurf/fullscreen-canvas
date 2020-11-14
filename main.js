@@ -1,44 +1,48 @@
-"strict mode"
-
 const canvas = document.querySelector('canvas')
 const rendercontext = canvas.getContext("2d")
 
-canvas.width = document.body.clientWidth
-canvas.height = document.body.clientHeight
-draw()
-
-window.onresize = e => {
-  canvas.width = document.body.clientWidth
-  canvas.height = document.body.clientHeight
+window.onresize = () => {
+  resize()
   draw()
 }
 
-function draw() {
-  rendercontext.fillStyle = 'bisque'
-  rendercontext.fillRect(0, 0, canvas.width, canvas.height)
+resize()
+draw()
 
-  const cx = canvas.width / 2
-  const cy = canvas.height / 2
-  const _ = canvas.width / 4
-
-  const path1 = new Path2D()
-  path1.moveTo(0, cy)
-  path1.lineTo(cx * 2, cy)
-
-  rendercontext.strokeStyle = 'purple'
-  rendercontext.lineWidth = 50
-  rendercontext.stroke(path1)
-
-  const path = new Path2D();
-  path.moveTo(cx, 0)
-  path.lineTo(cx, cy * 2)
-
-  rendercontext.strokeStyle = 'red'
-  rendercontext.lineWidth = 10
-  rendercontext.stroke(path)
-
-  rendercontext.fillStyle = 'black'
-  rendercontext.fillRect(cx - _ / 2, cy - _ / 2, _, _)
+function resize() {
+  canvas.width = document.body.clientWidth
+  canvas.height = document.body.clientHeight
 }
 
-draw()
+function draw() {
+
+  const center = {
+    x: Math.floor(canvas.width / 2),
+    y: Math.floor(canvas.height / 2)
+  }
+
+  rendercontext.lineWidth = canvas.width / 4
+  rendercontext.strokeStyle = 'aquamarine'
+
+  rendercontext.beginPath()
+  rendercontext.moveTo(0, 0)
+  rendercontext.lineTo(canvas.width, canvas.height)
+  rendercontext.stroke()
+
+  rendercontext.beginPath()
+  rendercontext.moveTo(canvas.width, 0)
+  rendercontext.lineTo(0, canvas.height)
+  rendercontext.stroke()
+  
+  const _ = 100
+  
+  rendercontext.fillStyle = 'black'
+
+  rendercontext.fillRect(
+    center.x - _ / 2,
+    center.y - _ / 2,
+    _,
+    _
+  )
+
+}
